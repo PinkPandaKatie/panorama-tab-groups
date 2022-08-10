@@ -81,12 +81,11 @@ export class Frame {
                     class="list__item list__item--tab ${
                       isActive ? "list__item--highlight" : ""
                     }" data-nav-row>
-                    <button class="list__link" title="${Tab.title}
-${Tab.url}">
+                    <button class="list__link">
                         <img class="tab__icon" 
                              src="${Tab.favIconUrl}" 
                              width="16" height="16" alt="" />
-                        <span>${Tab.title}</span>
+                        <span></span>
                     </button>
                     <button class="list__close" 
                             title="${browser.i18n.getMessage("closeTab")}"
@@ -99,9 +98,10 @@ ${Tab.url}">
         value: Tab
       });
 
-      node
-        .querySelector(".list__link")
-        .addEventListener("click", async event => {
+      let linkButton = node.querySelector(".list__link");
+      linkButton.setAttribute("title", `${Tab.title}\n${Tab.url}`);
+      linkButton.querySelector("span").innerText = Tab.title;
+      linkButton.addEventListener('click', async (event) => {
           event.preventDefault();
           Tab.open();
           window.PopupView.close();
